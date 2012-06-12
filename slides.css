@@ -1,0 +1,66 @@
+body {
+  width: 600px;
+  margin: 20px auto 20px auto;
+  font-family: Palatino, serif;
+}
+
+pre, code {
+  font-family: Menlo, monospace;
+  color: #333;
+  font-weight: bold;
+}
+
+p.down-arrow {
+  -webkit-transform: rotate(180deg);
+  font-size: 32px;
+  text-align: center;
+  margin: 20px 0;
+}
+
+h1 {
+  font-size: 28px;
+  line-height: 28px;
+  margin-bottom: 40px;
+}
+
+h1 span {
+  float: right;
+  font-size: 14px;
+  line-height: 14px;
+  padding-top: 8px;
+}
+
+a {
+  color: blue;
+}
+
+div.slide {
+  display: none;
+}
+
+div.slide.active {
+  display: block;
+}
+
+.center {
+  text-align: center;
+}
+
+p.right {
+  text-align: right;
+}
+
+ul li {
+  margin-bottom: 10px;
+}
+
+pre { padding: 5px;} 
+pre.codeblock { font-family: monospace; color: #ffffff; background-color: #000000; }
+.lnr { color: #afffff; }
+.Number { color: #87af5f; }
+.Identifier { color: #5fafaf; }
+.Function { color: #ffd75f; }
+.Keyword { color: #d7875f; }
+.String { color: #87af5f; }
+.Type { color: #d75f5f; }
+.Statement { color: #d7875f; }

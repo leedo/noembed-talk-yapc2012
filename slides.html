@@ -1,0 +1,157 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<link type="text/css" rel="stylesheet" href="slides.css"></link>
+<script src="slides.js" type="text/javascript"></script>
+<link type="text/css" rel="stylesheet" href="https://noembed.com/noembed.css"></link>
+<style type="text/css">
+<!--
+-->
+</style>
+
+</head>
+<body>
+<h1>Noembed <span><a href="http://noembed.com">noembed.com</a></span></h1>
+
+<div class="slide">
+
+<p class="center"><code>http://www.asciiartfarts.com/20041113.html</code></p>
+<p class="down-arrow">⇧</p>
+
+<div style="width:503px;margin:0 auto">
+<div class="noembed-embed-inner noembed-asciiartfarts">
+<pre style="color: #ffffff">                   .                 JAVA TECHNOLOGY IS NOT FAULT    
+                    `:.              TOLERANT AND IS NOT DESIGNED,   
+                      `:.            MANUFACTURED, OR INTENDED FOR   
+              .:'     ,::            USE OR RESALE AS ON-LINE        
+             .:'      ;:'            CONTROL EQUIPMENT IN HAZARDOUS  
+             ::      ;:'             ENVIRONMENTS REQUIRING FAIL-SAFE
+              :    .:'               PERFORMANCE, SUCH AS IN THE     
+               `.  :.                OPERATION OF NUCLEAR FACILITIES,
+      _________________________      AIRCRAFT NAVIGATION OR          
+     : _ _ _ _ _ _ _ _ _ _ _ _ :     COMMUNICATION SYSTEMS, AIR      
+ ,---:".".".".".".".".".".".".":     TRAFFIC CONTROL, DIRECT LIFE    
+: ,'"`::.:.:.:.:.:.:.:.:.:.:.::'     SUPPORT MACHINES, OR WEAPONS    
+`.`.  `:-===-===-===-===-===-:'      SYSTEMS, IN WHICH THE FAILURE OF
+  `.`-._:                   :        JAVA TECHNOLOGY COULD LEAD      
+    `-.__`.               ,' met.    DIRECTLY TO DEATH, PERSONAL     
+,--------`"`-------------'--------.  INJURY, OR SEVERE PHYSICAL OR   
+ `"--.__                   __.--"'   ENVIRONMENTAL DAMAGE.           
+        `""-------------""'</pre>
+
+</div>
+</div>
+</div>
+
+<div class="slide">
+  <h2 class="center">Lee Aylward</h2>
+  <h3 class="center">Ars Technica</h3>
+  <h4 class="center">Chicago, IL</h4>
+</div>
+
+<div class="slide">
+  <blockquote>oEmbed is a format for allowing an embedded representation of a URL on third party sites. The simple API allows a website to display embedded content (such as photos or videos) when a user posts a link to that resource, without having to parse the resource directly.</blockquote>
+  <p class="right"><a href="http://oembed.com">oembed.com</a></p>
+</div>
+
+<div class="slide">
+  <p style="font-size:12px"><code>http://noembed.com/embed?url=http%3A%2F%2Fwww.asciiartfarts.com%2F20041113.html</code></p>
+<p class="down-arrow">⇧</p>
+  <pre>{
+  html: "&lt;pre&gt; ...&lt;/pre&gt;",
+  provider_name: "ASCII Art Farts",
+  title: "#1969: FRIGHTENING DISCLAIMER",
+  type: "rich",
+  url: "http://www.asciiartfarts.com/20041113.html"
+}</pre>
+</div>
+
+<div class="slide">
+  <ul style="font-size:24px;list-style:none;text-align:center">
+    <li>YouTube</li>
+    <li>Flickr</li>
+    <li>Vimeo</li>
+    <li>SlideShare</li>
+    <li>SoundCloud</li>
+    <li>(lots more)</li>
+  </ul>
+</div>
+
+<div class="slide">
+  <h2>Problems</h2>
+  <ul style="font-size:24px">
+    <li>Missing properties</li>
+    <li>Unreliable servers</li>
+    <li>Rate limits</li>
+  </ul>
+</div>
+
+<div class="slide">
+  <h2>A solution</h2>
+  <ul style="font-size:24px">
+    <li>Single endpoint</li>
+    <li>Proxy to 3rd party sites</li>
+    <li>Fix bad HTML</li>
+    <li>Add missing properties</li>
+    <li>Add sites that lack oEmbed support</li>
+  </ul>
+</div>
+
+<div class="slide center">
+    <h2>embed.ly</h3>
+    <p>Costs money, not extendible</p>
+    <h2>Oohembed</h3>
+    <p>Merged with embed.ly</p>
+  </ul>
+</div>
+
+<div class="slide">
+  <ul style="font-size:24px;list-style:none;text-align:center">
+    <li>MetroTwit</li>
+    <li>StatusNet</li>
+    <li>Alice (IRC client)</li>
+    <li>Ars Technica</li>
+  </ul>
+</div>
+
+<div class="slide">
+  <h2 class="center"><a href="http://noembed.com/demo">Demo</a></h2>
+</div>
+
+<div class="slide">
+<pre class="codeblock">
+<span class="Statement">package</span><span class="Type"> Noembed::Source::AsciiArtFarts</span>;
+
+<span class="Statement">use </span>Web::Scraper;
+
+<span class="Statement">use parent</span> <span class="String">'</span><span class="String">Noembed::Source</span><span class="String">'</span>;
+
+<span class="Keyword">sub </span><span class="Function">prepare_source </span>{
+  <span class="Statement">my</span> <span class="Identifier">$self</span> = <span class="Statement">shift</span>;
+  <span class="Identifier">$self</span><span class="Identifier">-&gt;{</span><span class="String">scraper</span><span class="Identifier">}</span> = scraper {
+    process <span class="String">'</span><span class="String">td[bgcolor=&quot;#000000&quot;] font</span><span class="String">'</span>, <span class="String">color</span> =&gt; <span class="String">'</span><span class="String">@color</span><span class="String">'</span>;
+    process <span class="String">'</span><span class="String">td[bgcolor=&quot;#000000&quot;] pre</span><span class="String">'</span>, <span class="String">art</span> =&gt; <span class="String">'</span><span class="String">RAW</span><span class="String">'</span>;
+    process <span class="String">'</span><span class="String">h1</span><span class="String">'</span>, <span class="String">title</span> =&gt; <span class="String">'</span><span class="String">TEXT</span><span class="String">'</span>;
+  };
+}
+
+<span class="Keyword">sub </span><span class="Function">patterns </span>{ <span class="String">'</span><span class="String">http://www\.asciiartfarts\.com/[0-9]+\.html</span><span class="String">'</span> }
+<span class="Keyword">sub </span><span class="Function">provider_name </span>{ <span class="String">&quot;</span><span class="String">ASCII Art Farts</span><span class="String">&quot;</span> }
+
+<span class="Keyword">sub </span><span class="Function">serialize </span>{
+  <span class="Statement">my</span> (<span class="Identifier">$self</span>, <span class="Identifier">$body</span>) = <span class="Identifier">@_</span>;
+  <span class="Statement">my</span> <span class="Identifier">$data</span> = <span class="Identifier">$self</span><span class="Identifier">-&gt;{</span><span class="String">scraper</span><span class="Identifier">}</span><span class="Identifier">-&gt;scrape</span>(<span class="Identifier">$body</span>);
+  <span class="Identifier">$data</span><span class="Identifier">-&gt;{</span><span class="String">art</span><span class="Identifier">}</span> = html(<span class="Identifier">$data</span><span class="Identifier">-&gt;{</span><span class="String">art</span><span class="Identifier">}</span>);
+  <span class="Statement">return</span> +{
+    <span class="String">html</span> =&gt; <span class="Identifier">$self</span><span class="Identifier">-&gt;render</span>(<span class="Identifier">$data</span>),
+    <span class="String">title</span> =&gt; <span class="Identifier">$data</span><span class="Identifier">-&gt;{</span><span class="String">title</span><span class="Identifier">}</span>,
+  };
+}
+
+<span class="Number">1</span>;
+</pre>
+
+</div>
+
+</body>
+</html>
